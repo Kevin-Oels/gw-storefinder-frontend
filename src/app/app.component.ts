@@ -28,6 +28,7 @@ export class AppComponent implements AfterViewInit {
   });
   
   ngAfterViewInit() {
+    // Init google maps & places on html elements.
     this.map = new google.maps.Map(this.mapElement.nativeElement);
     this.autocomplete = new google.maps.places.Autocomplete(this.searchElement.nativeElement);
     const self = this;
@@ -36,6 +37,8 @@ export class AppComponent implements AfterViewInit {
       self.coords = place.geometry.location;
       self.error = null;
     });
+    
+    // App is loaded, cocnnect to the socket server
     this.connect();
   }
 
@@ -45,11 +48,12 @@ export class AppComponent implements AfterViewInit {
       "reconnectionAttempts": "Infinity", //avoid having user reconnect manually in order to prevent dead clients after a server restart
       "timeout" : 10000,                  //before connect_error and connect_timeout are emitted.
     };
+    // connect to hosted socket server
     this.socket = io("http://kevdevbox.com", {path: '/gwStoreFinder/socket.io/'}, connectionOptions);
-    // this.socket = io("http://localhost:3000", connectionOptions);
+    // This.socket = io("http://localhost:3000", connectionOptions);
     const self = this;
     this.socket.on("result", results => {
-      // remove any existing markers
+      // Remove any existing markers
       this.clearMarkers();
       this.showMap = true;
       this.stores = results;
@@ -101,8 +105,10 @@ export class AppComponent implements AfterViewInit {
         location: this.coords,
         distance: this.searchDistance,
       }
+      // ask the socket server for information. The return is expected in the on('result') event.
       this.socket.emit('request', request);
       this.map.setCenter(this.coords);
+      // lets soom the map based on the search distance.
       switch(this.searchDistance){
         case 5: 
           this.map.setZoom(11);
