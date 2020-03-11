@@ -1,0 +1,84 @@
+:host {
+  margin: 10px;
+
+  .map {
+    width: 900px;
+    max-width: 100%;
+    height: 500px;
+    margin: 10px;
+  }
+
+  .hidden {
+    display: none;
+  }
+
+  .map-buttons {
+    font-family: sans-serif;
+    display: flex;
+    flex-direction: column;
+    height: 140px;
+    width: 350px;
+    padding: 20px;
+    max-width: 90%;
+
+    input {
+      height: 30px;
+      width: 90%;
+      padding-left: 10px;
+      border-radius: 5px;
+      border: 1px solid lightgray;
+    }
+    .error-text {
+      color: red;
+      padding: 5px 10px;
+    }
+    .slider-prefix {
+      padding-left: 5px;
+      font-style: italic;
+      display: flex;
+      align-items: center;
+      padding: 5px 0px;
+    }
+    .slider {
+      display: flex;
+      padding: 5px 0px;
+      input[type="range"] {
+        width: 200px;
+      }
+
+      .slider-text {
+        display: flex;
+        align-items: center;
+        padding-left: 20px;
+      }
+    }
+    button {
+      align-self: flex-end;
+      border: none;
+      border-radius: 5px;
+      background-color: darkgreen;
+      background-image: linear-gradient(to right, darkgreen 0%, lightgreen 150%);
+      color: white;
+      height: 30px;
+      width: 100px;
+    }
+  }
+
+  .location-list {
+    margin: 10px;
+    max-width: 100%;
+    border: 1px solid lightgray;
+    border-radius: 5px;
+    height: 300px;
+    width: 900px;
+    overflow-y: scroll;
+
+    .location-name {
+      font-weight: bold;
+    }
+    .location-distance {
+      color: orange;
+      font-weight: bold;
+    }
+  }
+}
