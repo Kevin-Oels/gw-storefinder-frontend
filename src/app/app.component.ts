@@ -23,6 +23,8 @@ export class AppComponent implements AfterViewInit {
   searchDistance = 30;
   coords;
   error;
+
+  // Declare a single inforwindow. Which is reused for each marker.
   infowindow = new google.maps.InfoWindow({
     content: ''
   });
@@ -63,9 +65,11 @@ export class AppComponent implements AfterViewInit {
     });
   }
   
+  // Create a marker and set its position.
   markLocation(locationInfo){
     const self = this;
-    // Create a marker and set its position.
+    
+    //Marker infowindow text.
     var contentString = '<h3>' + locationInfo.name + '</h3>' +
       '<br>' + '<div>' + 
       locationInfo.address + ', ' +
@@ -74,16 +78,16 @@ export class AppComponent implements AfterViewInit {
       locationInfo.Postcode +
       '</div>' + '<br>' +
       '<div>' + locationInfo.phoneNumber + '</div>';
-
+    // Add the marker to the map
     const marker = new google.maps.Marker({
       map: this.map,
       position: locationInfo.location,
       title: locationInfo.name
     });
-
+    
     this.markers.push(marker);
     
-    // show store info when marker is clicked
+    // Show store info when marker is clicked
     marker.addListener('click', function(){
       self.selectedStore = locationInfo;
       self.infowindow.setContent(contentString);
@@ -105,10 +109,10 @@ export class AppComponent implements AfterViewInit {
         location: this.coords,
         distance: this.searchDistance,
       }
-      // ask the socket server for information. The return is expected in the on('result') event.
+      // Ask the socket server for information. The return is expected in the on('result') event.
       this.socket.emit('request', request);
       this.map.setCenter(this.coords);
-      // lets soom the map based on the search distance.
+      // Zoom the map based on the search distance.
       switch(this.searchDistance){
         case 5: 
           this.map.setZoom(11);
